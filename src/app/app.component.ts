@@ -28,7 +28,7 @@ export class AppComponent {
 
   postDoc: AngularFirestoreDocument<Post>;
   post: Observable<Post>;
-  
+
   constructor(private afs: AngularFirestore) {
 
   }
@@ -52,5 +52,9 @@ export class AppComponent {
   getPost(postId) {
     this.postDoc = this.afs.doc('posts/'+postId);
     this.post = this.postDoc.valueChanges();
+  }
+
+  deletePost(postId) {
+    this.afs.doc('posts/'+postId).delete();
   }
 }
