@@ -24,8 +24,10 @@ interface ContactId extends Contact {
 })
 
 export class AppComponent {
-  public show:boolean = false;
-  public buttonName:any = 'Show';
+  public showadd:boolean = false;
+  public showedit:boolean = false;
+  public btnadd:any = 'Show';
+  public btnedit:any = 'Show';
 
   contactsCol: AngularFirestoreCollection<Contact>;
   contacts: any;
