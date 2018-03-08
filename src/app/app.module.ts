@@ -6,12 +6,12 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FormsModule } from '@angular/forms';
 
 var firebaseConfig = {
-    apiKey: "AIzaSyCS5t2nLmhmxBh65WRwuHa1RuG0LbLMZVo",
-    authDomain: "clist-afd0f.firebaseapp.com",
-    databaseURL: "https://clist-afd0f.firebaseio.com",
-    projectId: "clist-afd0f",
-    storageBucket: "clist-afd0f.appspot.com",
-    messagingSenderId: "74022261552"
+    apiKey: "AIzaSyDuJFawzEfG_O8wERrAjlmnInX15h9ITTs",
+    authDomain: "contactlist-ef4d0.firebaseapp.com",
+    databaseURL: "https://contactlist-ef4d0.firebaseio.com",
+    projectId: "contactlist-ef4d0",
+    storageBucket: "contactlist-ef4d0.appspot.com",
+    messagingSenderId: "58616075149"
   };
 
 
