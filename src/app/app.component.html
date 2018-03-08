@@ -1,29 +1,106 @@
-<input type="text" [(ngModel)]="firstname" name="firstname" placeholder="Firstname">
-<input type="text" [(ngModel)]="lastname" name="lastname" placeholder="Lastname">
-<input type="text" [(ngModel)]="phone" name="phone" placeholder="Phone Number">
-<input type="text" [(ngModel)]="mobile" name="mobile" placeholder="Mobile Number">
-<input type="text" [(ngModel)]="email" name="email" placeholder="E-mail">
-<textarea [(ngModel)]="address" name="address" placeholder="Address"></textarea>
-<input type="submit" value="Add a Contact" (click)="addContact()">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+              <h2>Manage <b>Contacts</b></h2>
+          </div>
+          <div class="col-sm-6">
+              <a href="#" (click)="toggleadd()" id="btnadd" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Contact</span></a>
+              <a href="#" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>            
+            </div>
+        </div>
+      </div><!--table title-->
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="selectAll">
+                  <label for="selectAll"></label>
+                </span>
+            </th>
+            <th>Firstname</th><th>Lastname</th><th>Phone</th><th>Mobile</th><th>E-mail</th><th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contact of contacts | async" (click)="getContact(contact.id)">
+            <td>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                  <label for="checkbox1"></label>
+                </span>
+            </td>
+            <td>{{ contact.data.firstname}}</td><td>{{ contact.data.lastname}}</td><td>{{ contact.data.phone}}</td><td>{{ contact.data.mobile}}</td><td>{{ contact.data.email}}</td><td>{{contact.data.address}}</td>
+            <td>
+                <a href="#" (click)="toggleedit()" id="btnedit" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a href="#" class="delete" (click)="deleteContact(contact.id)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table><!--table-->
+    </div><!--table wrapper-->
+  </div><!--container-->
+  <div class="container">
+    <ng-container *ngIf="showadd">
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="firstname" name="firstname" placeholder="Firstname">
+            </div>
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="lastname" name="lastname" placeholder="Lastname">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="phone" name="phone" placeholder="Phone Number">
+            </div>
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="mobile" name="mobile" placeholder="Mobile Number">
+            </div>
+        </div>
+        <input type="text" [(ngModel)]="email" name="email" placeholder="E-mail">
+        <textarea [(ngModel)]="address" name="address" placeholder="Address"></textarea>
+        <input type="submit" value="Add a Contact" (click)="addContact()">
+      </ng-container><!--add contact-->
+      <ng-container *ngIf="showedit">
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="firstname" name="firstname" placeholder="Firstname" value="{{ (contact | async)?.firstname }}">
+            </div>
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="lastname" name="lastname" placeholder="Lastname" value="{{ (contact | async)?.lastname }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="phone" name="phone" placeholder="Phone Number" value="{{ (contact | async)?.phone }}">
+            </div>
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)]="mobile" name="mobile" placeholder="Mobile Number" value="{{ (contact | async)?.mobile }}">
+            </div>
+        </div>
+        <input type="text" [(ngModel)]="email" name="email" placeholder="E-mail" value="{{ (contact | async)?.email }}">
+        <textarea [(ngModel)]="address" name="address" placeholder="Address" value="{{ (contact | async)?.address }}"></textarea>
+        <input type="submit" value="Edit Contact" (click)="editContact()">
+      </ng-container><!--edit contact-->
+  </div>
+</body>
+    
 
-<ul *ngFor="let contact of contacts | async">
-  <li (click)="getContact(contact.id)">
-   <strong>{{ contact.data.firstname}} {{ contact.data.lastname}}</strong> (<a href="#" (click)="deleteContact(contact.id)">delete</a>)
-    <br>
-    <strong>{{ contact.data.phone}}</strong>
-    <br>
-    <strong>{{ contact.data.mobile}}</strong>
-    <br>
-    <strong>{{ contact.data.email}}</strong>
-    <br>
-    {{contact.data.address}}
-  </li>
-</ul>
-
- <h1>A specific contact:</h1>
-
-  <h3>{{ (contact | async)?.firstname }} {{ (contact | async)?.lastname }}</h3>
-  <h3>{{ (contact | async)?.phone }}</h3>
-  <h3>{{ (contact | async)?.mobile }}</h3>
-  <h3>{{ (contact | async)?.email }}</h3>
-  <p>{{ (contact | async)?.address }}</p>
+    
+    
+    <!--   <h3>{{ (contact | async)?.firstname }} {{ (contact | async)?.lastname }}</h3>
+      <h3>{{ (contact | async)?.phone }}</h3>
+      <h3>{{ (contact | async)?.mobile }}</h3>
+      <h3>{{ (contact | async)?.email }}</h3>
+      <p>{{ (contact | async)?.address }}</p> -->

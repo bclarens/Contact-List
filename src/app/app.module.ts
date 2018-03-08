@@ -20,7 +20,7 @@ var firebaseConfig = {
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     FormsModule

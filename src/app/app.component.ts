@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -22,7 +22,10 @@ interface ContactId extends Contact {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
+  public show:boolean = false;
+  public buttonName:any = 'Show';
 
   contactsCol: AngularFirestoreCollection<Contact>;
   contacts: any;
@@ -64,5 +67,29 @@ export class AppComponent {
 
   deleteContact(contactId) {
     this.afs.doc('contacts/'+contactId).delete();
+  }
+
+  editContact(contactId){
+
+  }
+
+  toggleadd() {
+    this.showadd = !this.showadd;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if(this.showadd)  
+      this.btnadd = "Hide";
+    else
+      this.btnadd = "Show";
+  }
+
+  toggleedit() {
+    this.showedit = !this.showedit;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if(this.showedit)  
+      this.btnedit = "Hide";
+    else
+      this.btnedit = "Show";
   }
 }
