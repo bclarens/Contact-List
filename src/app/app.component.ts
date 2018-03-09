@@ -72,7 +72,7 @@ export class AppComponent {
   }
 
   editContact(contactId){
-
+    this.afs.doc('contacts/'+contactId).update({'firstname': this.firstname, 'lastname': this.lastname, 'phone': this.phone, 'mobile': this.mobile, 'email': this.email, 'address': this.address});
   }
 
   toggleadd() {
